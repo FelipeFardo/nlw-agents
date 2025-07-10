@@ -1,6 +1,6 @@
 ---
 description: Ultracite Rules
-<!-- globs: "**/*.{ts,tsx,js,jsx}" -->
+globs: "**/*.{ts,tsx,js,jsx}"
 alwaysApply: true
 ---
 
