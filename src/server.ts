@@ -1,12 +1,17 @@
 import { fastifyCors } from '@fastify/cors'
+import fastifySwagger from '@fastify/swagger'
+import scalarDocs from '@scalar/fastify-api-reference'
 import { fastify } from 'fastify'
 import {
+  jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import { env } from './env.ts'
-import { getRoomsRoutes } from './http/routes/get-rooms.ts'
+import { createRoomRoute } from './http/routes/create-room.ts'
+import { getRoomQuestionsRoute } from './http/routes/get-room-questions.ts'
+import { getRoomsRoute } from './http/routes/get-rooms.ts'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -17,9 +22,35 @@ app.register(fastifyCors, {
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
+app.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: 'Let me Ask API',
+      description: 'lorem impsu',
+      version: '1.0.0',
+    },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+  },
+  transform: jsonSchemaTransform,
+})
+
+app.register(scalarDocs, {
+  routePrefix: '/docs',
+})
+
 app.get('/health', () => {
   return 'OK'
 })
 
-app.register(getRoomsRoutes)
+app.register(getRoomsRoute)
+app.register(createRoomRoute)
+app.register(getRoomQuestionsRoute)
 app.listen({ port: env.PORT })

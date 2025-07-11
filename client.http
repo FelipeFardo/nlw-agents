@@ -4,5 +4,21 @@
 # Health check
 GET {{baseUrl}}/health
 
+### 
+
 # Get rooms
 GET {{baseUrl}}/rooms
+
+###
+# Create room
+POST {{baseUrl}}/rooms
+Content-Type: application/json
+
+{
+  "name": "Sala de teste",
+  "description": "Essa é uma sala de teste"
+}
+
+###
+# Get room questions
+GET {{baseUrl}}/rooms/111179ed-6778-47da-3cb9-f8813aabe33b/questions
