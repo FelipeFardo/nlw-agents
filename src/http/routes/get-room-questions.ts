@@ -14,6 +14,18 @@ export const getRoomQuestionsRoute: FastifyPluginCallbackZod = (app) => {
         params: z.object({
           roomId: z.string(),
         }),
+        response: {
+          200: z.object({
+            questions: z.array(
+              z.object({
+                id: z.string(),
+                question: z.string(),
+                answer: z.string().nullable(),
+                createdAt: z.date(),
+              })
+            ),
+          }),
+        },
       },
     },
     async ({ params }) => {
@@ -30,7 +42,7 @@ export const getRoomQuestionsRoute: FastifyPluginCallbackZod = (app) => {
         .where(eq(schema.questions.roomId, roomId))
         .orderBy(desc(schema.questions.createdAt))
 
-      return results
+      return { questions: results }
     }
   )
 }
