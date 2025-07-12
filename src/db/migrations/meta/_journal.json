@@ -8,6 +8,20 @@
       "when": 1752211059520,
       "tag": "0000_numerous_thunderball",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752278362855,
+      "tag": "0001_lowly_major_mapleleaf",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752280189303,
+      "tag": "0002_panoramic_steve_rogers",
+      "breakpoints": true
     }
   ]
 }
